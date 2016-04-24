@@ -1,0 +1,26 @@
+{
+  "name": "react-input-suggest",
+  "version": "0.0.1",
+  "description": "Input Suggest Component for React",
+  "main": "./lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nikolenkoanton92/react-input-suggest.git"
+  },
+  "keywords": [
+    "react",
+    "react-component",
+    "input",
+    "tags",
+    "suggest"
+  ],
+  "author": "Anton Nikoleno <nikolenkoanton92@gmail.com> (http://antonnikolenko.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nikolenkoanton92/react-input-suggest/issues"
+  },
+  "homepage": "https://github.com/nikolenkoanton92/react-input-suggest#readme"
+}
