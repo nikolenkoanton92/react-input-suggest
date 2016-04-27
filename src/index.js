@@ -56,8 +56,13 @@ module.exports = React.createClass({
 
   render: function() {
     return (
-      <div ref="wrapper">
-      <input onChange={this.props.onChange}
+      <div ref="wrapper" className="input-suggest-wrapper">
+      <div className="input-suggest-value">
+        <span className="input-suggest-label">family</span>
+        <span className="input-sugges-value-icon">x</span>
+      </div>
+      <input className="input-suggest-input"
+      onChange={this.props.onChange}
       placeholder={this.props.placeholder}
       onChange={this.handleInputChange}
       onKeyDown={this.handleKeyDown}
