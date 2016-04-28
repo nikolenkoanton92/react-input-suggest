@@ -3,6 +3,7 @@
  */
 
 var React = require('react')
+var Tags = require('./tags')
 
 /**
  * expose React Input Suggest component
@@ -57,10 +58,7 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div ref="wrapper" className="input-suggest-wrapper">
-      <div className="input-suggest-value">
-        <span className="input-suggest-label">family</span>
-        <span className="input-sugges-value-icon">x</span>
-      </div>
+      <Tags />
       <input className="input-suggest-input"
       onChange={this.props.onChange}
       placeholder={this.props.placeholder}
