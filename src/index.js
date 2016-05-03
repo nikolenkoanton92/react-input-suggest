@@ -3,7 +3,7 @@
  */
 
 var React = require('react')
-var Tags = require('./tags')
+var Tag = require('./tag')
 
 /**
  * expose React Input Suggest component
@@ -18,7 +18,8 @@ module.exports = React.createClass({
   propTypes: {
     onChange: React.PropTypes.func,
     placeholder: React.PropTypes.string,
-    keys: React.PropTypes.object,
+    addTagKeys: React.PropTypes.array,
+    removeTagKeys: React.PropTypes.array,
     readOnly: React.PropTypes.bool
   },
 
@@ -28,16 +29,12 @@ module.exports = React.createClass({
 
   getDefaultProps: function() {
     return {
+      tags: [1],
       placeholder: 'Add new tag',
-      keys: {
-        ENTER: 13,
-        TAB: 9,
-        BACKSPACE: 8,
-        UP_ARROW: 38,
-        DOWN_ARROW: 40,
-        ESCAPE: 27
-      },
-      readOnly: false
+      addTagKeys: [13, 9, 13, 40],
+      removeTagKeys: [8, 27],
+      readOnly: false,
+      value: 'hello'
     }
   },
 
@@ -47,19 +44,68 @@ module.exports = React.createClass({
 
   getInitialState: function() {
     return {
-      inputValue: ''
+      inputValue: '',
+      tags: []
     }
+  },
+
+  addNewTag: function(tag) {
+    var tags = this.state.tags.slice()
+    tags.push(tag)
+    this.setState({
+      tags: tags
+    })
+    this.clearInputValue()
+  },
+
+  clearInputValue: function() {
+    this.refs.input.value = ''
+  },
+
+  removeTag: function(idx) {
+    var tags = this.state.tags
+    tags.splice(idx, 1)
+
+    this.setState({
+      tags: tags
+    })
   },
 
   handleInputChange: function(event) {},
 
-  handleKeyDown: function(event) {},
+  handleKeyDown: function(event) {
+    var addTag = this.props.addTagKeys
+    var removeTag = this.props.removeTagKeys
+    var value = this.refs.input.value
+
+    var add = addTag.indexOf(event.keyCode) !== -1
+    var remove = removeTag.indexOf(event.keyCode) !== -1
+
+    if (add && value !== '') {
+      event.preventDefault()
+      this.addNewTag(value)
+    }
+
+    if (remove && value === '') {
+      event.preventDefault()
+      this.removeTag(this.state.tags.length - 1)
+    }
+
+  },
 
   render: function() {
+    var self = this
+
+    var tags = this.state.tags.map(function(tag, idx) {
+      return (
+        <Tag key={idx} label={tag} index={idx} onRemove={self.removeTag}/>
+        )
+    })
+
     return (
       <div ref="wrapper" className="input-suggest-wrapper">
-      <Tags />
-      <input className="input-suggest-input"
+      {tags}
+      <input ref="input" className="input-suggest-input"
       onChange={this.props.onChange}
       placeholder={this.props.placeholder}
       onChange={this.handleInputChange}
