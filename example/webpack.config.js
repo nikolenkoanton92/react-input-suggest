@@ -20,13 +20,14 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: 'style!css'
+        loader: 'style-loader!css-loader'
       }
     ]
   },
   resolve: {
     alias: {
-      'react-input-suggest': path.join(__dirname, '..', 'src')
+      'react-input-suggest': path.join(__dirname, '..', 'src'),
+      'react-input-suggest.css': path.join(__dirname, '..', 'react-input-suggest.css')
     }
   },
   plugins: [
