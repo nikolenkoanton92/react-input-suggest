@@ -35,7 +35,7 @@ module.exports = React.createClass({
       addTagKeys: [13, 9, 13, 40],
       removeTagKeys: [8, 27],
       readOnly: false,
-      value: 'hello'
+      value: ''
     }
   },
 
@@ -60,7 +60,9 @@ module.exports = React.createClass({
   },
 
   clearInputValue: function() {
-    this.refs.input.value = ''
+    this.setState({
+      inputValue: ''
+    })
   },
 
   removeTag: function(idx) {
@@ -72,13 +74,24 @@ module.exports = React.createClass({
     })
   },
 
-  handleInputChange: function(event) {},
+  focus: function() {
+    this.refs.input.focus()
+  },
+  blur: function() {
+    this.refs.input.blur()
+    this.refs.wrapper.blur()
+  },
+
+  handleClickOnWrapper: function() {
+    // this.blur()
+    // this.focus()
+  },
 
   handleKeyDown: function(event) {
+
     var addTag = this.props.addTagKeys
     var removeTag = this.props.removeTagKeys
-    var value = this.refs.input.value
-
+    var value = this.state.inputValue
     var add = addTag.indexOf(event.keyCode) !== -1
     var remove = removeTag.indexOf(event.keyCode) !== -1
 
@@ -94,9 +107,14 @@ module.exports = React.createClass({
 
   },
 
+  handleInputChange: function(event) {
+    var value = event.target.value.trim()
+    this.setState({
+      inputValue: value
+    })
+  },
   render: function() {
     var self = this
-
     var tags = this.state.tags.map(function(tag, idx) {
       return (
         <Tag key={idx} label={tag} index={idx} onRemove={self.removeTag}/>
@@ -104,7 +122,7 @@ module.exports = React.createClass({
     })
 
     return (
-      <div ref="wrapper" className="input-suggest-wrapper">
+      <div ref="wrapper" className="input-suggest-wrapper" onClick={this.handleClickOnWrapper} onKeyDown={this.handleKeyDown}>
       {tags}
       <Input
       placeholder={this.props.placeholder}
@@ -113,6 +131,8 @@ module.exports = React.createClass({
       onChange={this.handleInputChange}
       readOnly={this.props.readOnly}
       />
+      <div>
+      </div>
       </div>
       )
   }
