@@ -4,6 +4,7 @@
 
 var React = require('react')
 var Tag = require('./tag')
+var Input = require('./input')
 
 /**
  * expose React Input Suggest component
@@ -105,11 +106,11 @@ module.exports = React.createClass({
     return (
       <div ref="wrapper" className="input-suggest-wrapper">
       {tags}
-      <input ref="input" className="input-suggest-input"
-      onChange={this.props.onChange}
+      <Input
       placeholder={this.props.placeholder}
-      onChange={this.handleInputChange}
+      value={this.state.inputValue}
       onKeyDown={this.handleKeyDown}
+      onChange={this.handleInputChange}
       readOnly={this.props.readOnly}
       />
       </div>
