@@ -46,7 +46,8 @@ module.exports = React.createClass({
   getInitialState: function() {
     return {
       inputValue: '',
-      tags: []
+      tags: [],
+      isOpen: false
     }
   },
 
@@ -113,6 +114,27 @@ module.exports = React.createClass({
       inputValue: value
     })
   },
+
+  renderSuggestList: function() {
+    if (this.state.isOpen) {
+      return (
+        <div className="suggest-list-wrapper">
+          <div className="suggest-list">
+            <div className="suggest-list-value">Hello World</div>
+          </div>
+        </div>
+        )
+    } else {
+      return null
+    }
+  },
+
+  handleMouseDownArrow: function() {
+    this.setState({
+      isOpen: !this.state.isOpen
+    })
+  },
+
   render: function() {
     var self = this
     var tags = this.state.tags.map(function(tag, idx) {
@@ -120,6 +142,8 @@ module.exports = React.createClass({
         <Tag key={idx} label={tag} index={idx} onRemove={self.removeTag}/>
         )
     })
+
+    var suggestListWrapper = this.renderSuggestList()
 
     return (
       <div className="suggest-wrapper">
