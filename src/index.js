@@ -156,15 +156,11 @@ module.exports = React.createClass({
       onChange={this.handleInputChange}
       readOnly={this.props.readOnly}
       />
-      <span className="input-dropdown-box">
-      <span className="input-dropdown-box-arrow-down"></span>
+      <span className="input-dropdown-box" onMouseDown={this.handleMouseDownArrow}>
+      <span className="input-dropdown-box-arrow-down" onMouseDown={this.handleMouseDownArrow}></span>
       </span>
       </div>
-      <div className="suggest-list-wrapper">
-        <div className="suggest-list">
-        <div className="suggest-list-value">Hello World</div>
-        </div>
-      </div>
+      {suggestListWrapper}
       </div>
       )
   }
