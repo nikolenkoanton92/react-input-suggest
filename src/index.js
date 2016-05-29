@@ -131,8 +131,9 @@ module.exports = React.createClass({
       onChange={this.handleInputChange}
       readOnly={this.props.readOnly}
       />
-      <div>
-      </div>
+      <span className="input-dropdown-box">
+      <span className="input-dropdown-box-arrow-down"></span>
+      </span>
       </div>
       )
   }
