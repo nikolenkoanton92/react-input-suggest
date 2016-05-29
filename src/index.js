@@ -122,6 +122,7 @@ module.exports = React.createClass({
     })
 
     return (
+      <div className="suggest-wrapper">
       <div ref="wrapper" className="input-suggest-wrapper" onClick={this.handleClickOnWrapper} onKeyDown={this.handleKeyDown}>
       {tags}
       <Input
@@ -134,6 +135,12 @@ module.exports = React.createClass({
       <span className="input-dropdown-box">
       <span className="input-dropdown-box-arrow-down"></span>
       </span>
+      </div>
+      <div className="suggest-list-wrapper">
+        <div className="suggest-list">
+        <div className="suggest-list-value">Hello World</div>
+        </div>
+      </div>
       </div>
       )
   }

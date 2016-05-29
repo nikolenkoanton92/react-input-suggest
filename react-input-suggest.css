@@ -1,3 +1,8 @@
+.suggest-wrapper{
+  position: relative;
+  box-sizing: border-box;
+}
+
 .input-suggest-wrapper{
   background-color: #fff;
   border-color: #d9d9d9;
@@ -11,6 +16,7 @@
   overflow: hidden;
   position: relative;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .input-suggest-value{
@@ -89,4 +95,34 @@
   display: inline-block;
   height: 0;
   width: 0;
+}
+
+.suggest-list-wrapper {
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-top-color: #e6e6e6;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+  box-sizing: border-box;
+  margin-top: -1px;
+  max-height: 220px;
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  z-index: 1;
+  -webkit-overflow-scrolling: touch;
+}
+
+.suggest-list {
+  max-height: 218px;
+  overflow-y: auto;
+}
+
+.suggest-list-value{
+  box-sizing: border-box;
+  background-color: #fff;
+  color: #666666;
+  cursor: pointer;
+  display: block;
 }
