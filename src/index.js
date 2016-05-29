@@ -147,7 +147,7 @@ module.exports = React.createClass({
 
     return (
       <div className="suggest-wrapper">
-      <div ref="wrapper" className="input-suggest-wrapper" onClick={this.handleClickOnWrapper} onKeyDown={this.handleKeyDown}>
+      <div ref="wrapper" className="input-suggest-wrapper" onClick={this.handleClickOnWrapper}>
       {tags}
       <Input
       placeholder={this.props.placeholder}
