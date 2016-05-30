@@ -5,6 +5,7 @@
 var React = require('react')
 var Tag = require('./tag')
 var Input = require('./input')
+var SuggestList = require('./suggest-list')
 
 /**
  * expose React Input Suggest component
@@ -21,7 +22,8 @@ module.exports = React.createClass({
     placeholder: React.PropTypes.string,
     addTagKeys: React.PropTypes.array,
     removeTagKeys: React.PropTypes.array,
-    readOnly: React.PropTypes.bool
+    readOnly: React.PropTypes.bool,
+    suggestions: React.PropTypes.array
   },
 
   /**
@@ -116,13 +118,10 @@ module.exports = React.createClass({
   },
 
   renderSuggestList: function() {
-    if (this.state.isOpen) {
+    var suggestions = this.props.suggestions
+    if (this.state.isOpen && suggestions.length > 0) {
       return (
-        <div className="suggest-list-wrapper">
-          <div className="suggest-list">
-            <div className="suggest-list-value">Hello World</div>
-          </div>
-        </div>
+        <SuggestList suggestions={suggestions}/>
         )
     } else {
       return null
