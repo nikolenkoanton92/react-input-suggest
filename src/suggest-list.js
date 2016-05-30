@@ -7,11 +7,12 @@ var React = require('react')
 var ListValue = React.createClass({
 
   propTypes: {
-    name: React.PropTypes.string.isRequired
+    name: React.PropTypes.string.isRequired,
+    onClick: React.PropTypes.func
   },
   render: function() {
     return (
-      <div className="suggest-list-value">{this.props.name}</div>
+      <div className="suggest-list-value" onClick={this.props.onClick}>{this.props.name}</div>
       )
   }
 })
@@ -27,9 +28,10 @@ module.exports = React.createClass({
   },
 
   render: function() {
+    var self = this
     var list = this.props.suggestions && this.props.suggestions.map(function(el, idx) {
         return (
-          <ListValue key={idx} name={el.name} />
+          <ListValue key={idx} name={el.name} onClick={self.props.onClick.bind(null, idx)}/>
           )
     })
 

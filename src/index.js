@@ -37,7 +37,8 @@ module.exports = React.createClass({
       addTagKeys: [13, 9, 13, 40],
       removeTagKeys: [8, 27],
       readOnly: false,
-      value: ''
+      value: '',
+      suggestions: []
     }
   },
 
@@ -118,11 +119,19 @@ module.exports = React.createClass({
     })
   },
 
+  handleClickOnSuggestion: function(idx) {
+    var value = this.props.suggestions[idx].name
+
+    if (value !== '') {
+      this.addNewTag(value)
+    }
+  },
+
   renderSuggestList: function() {
     var suggestions = this.props.suggestions
     if (this.state.isOpen && suggestions.length > 0) {
       return (
-        <SuggestList suggestions={suggestions}/>
+        <SuggestList suggestions={suggestions} onClick={this.handleClickOnSuggestion}/>
         )
     } else {
       return null
