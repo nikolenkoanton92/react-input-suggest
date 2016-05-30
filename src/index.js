@@ -63,7 +63,9 @@ module.exports = React.createClass({
     })
 
     this.clearInputValue()
+    this.closeSuggestionList()
     this.resetSuggestions()
+
   },
 
   clearInputValue: function() {
@@ -89,10 +91,29 @@ module.exports = React.createClass({
     this.refs.wrapper.blur()
   },
 
-  handleClickOnWrapper: function() {
+  handleClickOnWrapper: function(event) {
+    var tag = event.target.tagName.toLowerCase()
+
+    if (tag === 'span') {
+      return false
+    }
+
     this.refs.input.focus()
+    this.openSuggestionList()
   // this.blur()
   // this.focus()
+  },
+
+  openSuggestionList: function() {
+    this.setState({
+      isOpen: true
+    })
+  },
+
+  closeSuggestionList: function() {
+    this.setState({
+      isOpen: false
+    })
   },
 
   handleKeyDown: function(event) {
@@ -123,6 +144,7 @@ module.exports = React.createClass({
       inputValue: value
     })
 
+    this.openSuggestionList()
     this.filterSuggestions(value)
   },
 
@@ -146,7 +168,12 @@ module.exports = React.createClass({
     }
   },
 
-  handleMouseDownArrow: function() {
+  handleMouseDownArrow: function(event) {
+    var tag = event.target.tagName.toLowerCase()
+    if (tag !== 'span') {
+      return false
+    }
+
     this.setState({
       isOpen: !this.state.isOpen
     })
@@ -185,6 +212,9 @@ module.exports = React.createClass({
 
     var suggestListWrapper = this.renderSuggestList()
 
+    var dropdownBoxArrowClass = this.state.isOpen ?
+      'input-dropdown-box-arrow-up' : 'input-dropdown-box-arrow-down'
+
     return (
       <div className="suggest-wrapper">
       <div ref="wrapper" className="input-suggest-wrapper" onClick={this.handleClickOnWrapper}>
@@ -197,7 +227,7 @@ module.exports = React.createClass({
       readOnly={this.props.readOnly}
       />
       <span className="input-dropdown-box" onMouseDown={this.handleMouseDownArrow}>
-      <span className="input-dropdown-box-arrow-down" onMouseDown={this.handleMouseDownArrow}></span>
+      <span className={dropdownBoxArrowClass} onMouseDown={this.handleMouseDownArrow}></span>
       </span>
       </div>
       {suggestListWrapper}
