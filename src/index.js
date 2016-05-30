@@ -86,8 +86,9 @@ module.exports = React.createClass({
   },
 
   handleClickOnWrapper: function() {
-    // this.blur()
-    // this.focus()
+    this.refs.input.focus()
+  // this.blur()
+  // this.focus()
   },
 
   handleKeyDown: function(event) {
@@ -148,7 +149,7 @@ module.exports = React.createClass({
       <div className="suggest-wrapper">
       <div ref="wrapper" className="input-suggest-wrapper" onClick={this.handleClickOnWrapper}>
       {tags}
-      <Input
+      <Input ref="input"
       placeholder={this.props.placeholder}
       value={this.state.inputValue}
       onKeyDown={this.handleKeyDown}

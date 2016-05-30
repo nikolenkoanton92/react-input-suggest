@@ -27,13 +27,17 @@ module.exports = React.createClass({
     }
   },
 
+  focus: function() {
+    this.refs.input.focus()
+  },
+
   render: function() {
     var style = {
       width: this.state.width
     }
 
     return (
-      <input  className="input-suggest-input"
+      <input  ref="input" className="input-suggest-input"
       style={style}
       placeholder={this.props.placeholder}
       value={this.state.value}
