@@ -50,7 +50,8 @@ module.exports = React.createClass({
     return {
       inputValue: '',
       tags: [],
-      isOpen: false
+      isOpen: false,
+      suggestions: this.props.suggestions
     }
   },
 
@@ -60,7 +61,9 @@ module.exports = React.createClass({
     this.setState({
       tags: tags
     })
+
     this.clearInputValue()
+    this.resetSuggestions()
   },
 
   clearInputValue: function() {
@@ -93,7 +96,6 @@ module.exports = React.createClass({
   },
 
   handleKeyDown: function(event) {
-
     var addTag = this.props.addTagKeys
     var removeTag = this.props.removeTagKeys
     var value = this.state.inputValue
@@ -110,6 +112,9 @@ module.exports = React.createClass({
       this.removeTag(this.state.tags.length - 1)
     }
 
+    if (event.keyCode === 8 && value !== '') {
+      this.resetSuggestions()
+    }
   },
 
   handleInputChange: function(event) {
@@ -117,6 +122,8 @@ module.exports = React.createClass({
     this.setState({
       inputValue: value
     })
+
+    this.filterSuggestions(value)
   },
 
   handleClickOnSuggestion: function(idx) {
@@ -128,7 +135,8 @@ module.exports = React.createClass({
   },
 
   renderSuggestList: function() {
-    var suggestions = this.props.suggestions
+
+    var suggestions = this.state.suggestions
     if (this.state.isOpen && suggestions.length > 0) {
       return (
         <SuggestList suggestions={suggestions} onClick={this.handleClickOnSuggestion}/>
@@ -141,6 +149,29 @@ module.exports = React.createClass({
   handleMouseDownArrow: function() {
     this.setState({
       isOpen: !this.state.isOpen
+    })
+  },
+
+  filterSuggestions: function(value) {
+
+    var suggestions = this.state.suggestions
+
+    var filteredSuggestions = suggestions.filter(function(el) {
+      if (el.name.indexOf(value) > -1) {
+        return el
+      }
+    })
+
+    this.setState({
+      suggestions: filteredSuggestions
+    })
+  },
+
+  resetSuggestions: function() {
+    var suggestions = this.props.suggestions
+
+    this.setState({
+      suggestions: suggestions
     })
   },
 
