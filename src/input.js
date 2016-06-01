@@ -5,9 +5,21 @@
 var React = require('react')
 
 module.exports = React.createClass({
+
+  /**
+   * Setup Property Types
+   */
+
+  propTypes: {
+    onChange: React.PropTypes.func,
+    onKeyDown: React.PropTypes.func,
+    placeholder: React.PropTypes.string
+  },
+
   getDefaultProps: function() {
     return {
       value: ''
+
     }
   },
   getInitialState: function() {
@@ -16,7 +28,7 @@ module.exports = React.createClass({
       width: '5px'
     }
   },
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps: function(nextProps) {
     if (nextProps.value !== this.state.value) {
       var value = nextProps.value.trim()
       var width = value !== '' ? 'auto' : '5px'
