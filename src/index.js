@@ -18,11 +18,12 @@ module.exports = React.createClass({
    */
 
   propTypes: {
-    onChange: React.PropTypes.func,
-    addTagKeys: React.PropTypes.array,
-    removeTagKeys: React.PropTypes.array,
-    readOnly: React.PropTypes.bool,
-    suggestions: React.PropTypes.array
+    onChange: React.PropTypes.func, // function(tags){}
+    addTagKeys: React.PropTypes.array, // array of number key(s) for add a new tag
+    removeTagKeys: React.PropTypes.array, // array of number key(s) for remove tag
+    readOnly: React.PropTypes.bool, // input with readOnly
+    isSuggestList: React.PropTypes.bool, // disable suggest list or not
+    suggestions: React.PropTypes.array // array of suggestions elements for suggestions list
   },
 
   /**
@@ -34,6 +35,7 @@ module.exports = React.createClass({
       addTagKeys: [13, 9, 13, 40],
       removeTagKeys: [8, 27],
       readOnly: false,
+      isSuggestList: true,
       suggestions: []
     }
   },
@@ -52,6 +54,11 @@ module.exports = React.createClass({
     }
   },
 
+  /**
+   * add new tag
+   * @param {String} tag
+   */
+
   addNewTag: function(tag) {
     var tags = this.state.tags.slice()
     tags.push(tag)
@@ -65,11 +72,20 @@ module.exports = React.createClass({
 
   },
 
+  /**
+   * clear input value
+   */
+
   clearInputValue: function() {
     this.setState({
       inputValue: ''
     })
   },
+
+  /**
+   * remove tag label
+   * @param {Number} idx // index of element in array
+   */
 
   removeTag: function(idx) {
     var tags = this.state.tags
@@ -83,6 +99,9 @@ module.exports = React.createClass({
   focus: function() {
     this.refs.input.focus()
   },
+
+
+  // @TODO (@nikolenkoanton92) need fix blur
   blur: function() {
     this.refs.input.blur()
     this.refs.wrapper.blur()
@@ -95,10 +114,11 @@ module.exports = React.createClass({
       return false
     }
 
-    this.refs.input.focus()
-    this.openSuggestionList()
-  // this.blur()
-  // this.focus()
+    this.focus()
+    // this.blur()
+
+    if (this.props.isSuggestList)
+      this.openSuggestionList()
   },
 
   openSuggestionList: function() {
@@ -162,7 +182,7 @@ module.exports = React.createClass({
   renderSuggestList: function() {
 
     var suggestions = this.state.suggestions
-    if (this.state.isOpen && suggestions.length > 0) {
+    if (this.state.isOpen && suggestions.length > 0 && this.props.isSuggestList) {
       return (
         <SuggestList
         suggestValueFocus={this.state.suggestValueFocus}
@@ -174,6 +194,17 @@ module.exports = React.createClass({
     } else {
       return null
     }
+  },
+
+  renderDropdown: function() {
+    var dropdownBoxArrowClass = this.state.isOpen ?
+      'input-dropdown-box-arrow-up' : 'input-dropdown-box-arrow-down'
+
+    return (
+      <span className="input-dropdown-box" onMouseDown={this.handleMouseDownArrow}>
+      <span className={dropdownBoxArrowClass} onMouseDown={this.handleMouseDownArrow}></span>
+      </span>
+      )
   },
 
   handleMouseDownArrow: function(event) {
@@ -219,9 +250,7 @@ module.exports = React.createClass({
     })
 
     var suggestListWrapper = this.renderSuggestList()
-
-    var dropdownBoxArrowClass = this.state.isOpen ?
-      'input-dropdown-box-arrow-up' : 'input-dropdown-box-arrow-down'
+    var dropdownSpan = this.props.isSuggestList ? this.renderDropdown() : null
 
     return (
       <div className="suggest-wrapper">
@@ -233,9 +262,7 @@ module.exports = React.createClass({
       onChange={this.handleInputChange}
       readOnly={this.props.readOnly}
       />
-      <span className="input-dropdown-box" onMouseDown={this.handleMouseDownArrow}>
-      <span className={dropdownBoxArrowClass} onMouseDown={this.handleMouseDownArrow}></span>
-      </span>
+      {dropdownSpan}
       </div>
       {suggestListWrapper}
       </div>
