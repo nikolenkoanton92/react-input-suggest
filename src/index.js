@@ -19,7 +19,6 @@ module.exports = React.createClass({
 
   propTypes: {
     onChange: React.PropTypes.func,
-    placeholder: React.PropTypes.string,
     addTagKeys: React.PropTypes.array,
     removeTagKeys: React.PropTypes.array,
     readOnly: React.PropTypes.bool,
@@ -32,12 +31,9 @@ module.exports = React.createClass({
 
   getDefaultProps: function() {
     return {
-      tags: [1],
-      placeholder: 'Add new tag',
       addTagKeys: [13, 9, 13, 40],
       removeTagKeys: [8, 27],
       readOnly: false,
-      value: '',
       suggestions: []
     }
   },
@@ -232,7 +228,6 @@ module.exports = React.createClass({
       <div ref="wrapper" className="input-suggest-wrapper" onClick={this.handleClickOnWrapper}>
       {tags}
       <Input ref="input"
-      placeholder={this.props.placeholder}
       value={this.state.inputValue}
       onKeyDown={this.handleKeyDown}
       onChange={this.handleInputChange}

@@ -15,13 +15,6 @@ module.exports = React.createClass({
     onKeyDown: React.PropTypes.func,
     placeholder: React.PropTypes.string
   },
-
-  getDefaultProps: function() {
-    return {
-      value: ''
-
-    }
-  },
   getInitialState: function() {
     return {
       value: '',
@@ -51,7 +44,7 @@ module.exports = React.createClass({
     return (
       <input  ref="input" className="input-suggest-input"
       style={style}
-      placeholder={this.props.placeholder}
+      // placeholder={this.props.placeholder}
       value={this.state.value}
       onChange={this.props.onChange}
       onKeyDown={this.props.onKeyDown}
