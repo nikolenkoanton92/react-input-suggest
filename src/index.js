@@ -18,7 +18,8 @@ module.exports = React.createClass({
    */
 
   propTypes: {
-    onChange: React.PropTypes.func, // function(tags){}
+    onAddTag: React.PropTypes.func, // function(tags){}
+    onRemoveTag: React.PropTypes.func, // function(idx){}
     addTagKeys: React.PropTypes.array, // array of number key(s) for add a new tag
     removeTagKeys: React.PropTypes.array, // array of number key(s) for remove tag
     readOnly: React.PropTypes.bool, // input with readOnly
@@ -36,6 +37,7 @@ module.exports = React.createClass({
       removeTagKeys: [8, 27],
       readOnly: false,
       isSuggestList: true,
+      tags: [],
       suggestions: []
     }
   },
@@ -60,16 +62,10 @@ module.exports = React.createClass({
    */
 
   addNewTag: function(tag) {
-    var tags = this.state.tags.slice()
-    tags.push(tag)
-    this.setState({
-      tags: tags
-    })
-
     this.clearInputValue()
     this.closeSuggestionList()
     this.resetSuggestions()
-
+    this.props.onAddTag(tag)
   },
 
   /**
@@ -88,12 +84,7 @@ module.exports = React.createClass({
    */
 
   removeTag: function(idx) {
-    var tags = this.state.tags
-    tags.splice(idx, 1)
-
-    this.setState({
-      tags: tags
-    })
+    this.props.onRemoveTag(idx)
   },
 
   focus: function() {
@@ -243,10 +234,10 @@ module.exports = React.createClass({
 
   render: function() {
     var self = this
-    var tags = this.state.tags.map(function(tag, idx) {
-      return (
-        <Tag key={idx} label={tag} index={idx} onRemove={self.removeTag}/>
-        )
+    var tags = this.props.tags && this.props.tags.map(function(tag, idx) {
+        return (
+          <Tag key={idx} label={tag} index={idx} onRemove={self.removeTag}/>
+          )
     })
 
     var suggestListWrapper = this.renderSuggestList()
