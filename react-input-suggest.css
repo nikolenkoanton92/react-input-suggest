@@ -126,3 +126,8 @@
   cursor: pointer;
   display: block;
 }
+
+.suggest-list-value.is-focused{
+  background-color: rgba(0,0,0,.05);
+  color: #333;
+}

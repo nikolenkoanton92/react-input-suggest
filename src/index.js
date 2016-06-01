@@ -51,7 +51,8 @@ module.exports = React.createClass({
       inputValue: '',
       tags: [],
       isOpen: false,
-      suggestions: this.props.suggestions
+      suggestions: this.props.suggestions,
+      suggestValueFocus: 0
     }
   },
 
@@ -148,6 +149,12 @@ module.exports = React.createClass({
     this.filterSuggestions(value)
   },
 
+  handleMouseMove: function(idx) {
+    this.setState({
+      suggestValueFocus: idx
+    })
+  },
+
   handleClickOnSuggestion: function(idx) {
     var value = this.props.suggestions[idx].name
 
@@ -161,7 +168,12 @@ module.exports = React.createClass({
     var suggestions = this.state.suggestions
     if (this.state.isOpen && suggestions.length > 0) {
       return (
-        <SuggestList suggestions={suggestions} onClick={this.handleClickOnSuggestion}/>
+        <SuggestList
+        suggestValueFocus={this.state.suggestValueFocus}
+        suggestions={suggestions}
+        onClick={this.handleClickOnSuggestion}
+        onMouseMove={this.handleMouseMove}
+        />
         )
     } else {
       return null
