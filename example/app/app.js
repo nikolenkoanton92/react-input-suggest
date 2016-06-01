@@ -1,22 +1,49 @@
 import 'react-input-suggest.css'
 import './style.css'
 
-import React, { Component } from 'react'
+import React from 'react'
 import { render } from 'react-dom'
 import ReactInputSuggest from 'react-input-suggest'
 
 import STATES from './data/states'
 
-class App extends Component {
+const App = React.createClass({
+  getInitialState() {
+    return {
+      tags: []
+    }
+  },
+
+  handleAddTag(tag) {
+    var tags = this.state.tags.slice()
+    tags.push(tag)
+    this.setState({
+      tags: tags
+    })
+  },
+
+  handleRemoveTag(idx) {
+    var tags = this.state.tags
+    tags.splice(idx, 1)
+
+    this.setState({
+      tags: tags
+    })
+  },
+
   render() {
     return (
       <div className="container">
       <h1>Example App</h1>
-      <ReactInputSuggest suggestions={STATES}/>
+      <ReactInputSuggest
+      tags={this.state.tags}
+      onAddTag={this.handleAddTag}
+      onRemoveTag={this.handleRemoveTag}
+      suggestions={STATES}/>
       </div>
       )
   }
-}
+})
 
 render((
   <App />
