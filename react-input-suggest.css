@@ -125,6 +125,8 @@
   color: #666666;
   cursor: pointer;
   display: block;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 .suggest-list-value.is-focused{
