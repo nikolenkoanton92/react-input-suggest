@@ -4,7 +4,16 @@ React component for inputing tag. Build for my own projects, but if you have coo
 
 ## Usage
 
-Comming soon, for now you can check props.
+### Props
+
+|Name|Type|Description|
+|---|---|---|---|---|
+|`onAddTag`||`Function`|When the added new tag|
+|`onRemoveTag`|`Function`|When the removed tag|
+|`removeTagKeys`|`Array`|Array of accepted keys|
+|`readOnly`|`Bool`|it specifies that an input field is read-only|
+|`isSuggestList`|`Bool`|if show suggestion list|
+|`suggestions`|`Array`|List of suggestion values|
 
 ## Example
 
