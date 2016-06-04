@@ -252,6 +252,7 @@ module.exports = React.createClass({
       onKeyDown={this.handleKeyDown}
       onChange={this.handleInputChange}
       readOnly={this.props.readOnly}
+      placeholder={this.props.placeholder}
       />
       {dropdownSpan}
       </div>
