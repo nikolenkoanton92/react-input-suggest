@@ -15,6 +15,9 @@ module.exports = React.createClass({
     onKeyDown: React.PropTypes.func,
     placeholder: React.PropTypes.string
   },
+  getDefaultProps: function() {
+    placeholder: ''
+  },
 
   getInitialState: function() {
     return {
@@ -29,10 +32,10 @@ module.exports = React.createClass({
     if (nextProps.value !== this.state.value) {
       var value = nextProps.value.trim()
 
-      this.changeInputWidth()
       this.setState({
         value: value
       })
+      this.changeInputWidth()
 
     }
   },
