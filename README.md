@@ -7,6 +7,7 @@ React component for inputing tag. Build for my own projects, but if you have coo
 ### Props
 
 |Name|Type|Description|
+|---|---|---|
 |`onAddTag`|`Function`|When the added new tag|
 |`onRemoveTag`|`Function`|When the removed tag|
 |`removeTagKeys`|`Array`|Array of accepted keys|
