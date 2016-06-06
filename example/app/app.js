@@ -39,7 +39,9 @@ const App = React.createClass({
       tags={this.state.tags}
       onAddTag={this.handleAddTag}
       onRemoveTag={this.handleRemoveTag}
-      suggestions={STATES}/>
+      suggestions={STATES}
+      placeholder={'Add new tag'}
+      />
       </div>
       )
   }
