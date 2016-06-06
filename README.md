@@ -6,14 +6,16 @@ React component for inputing tag. Build for my own projects, but if you have coo
 
 ### Props
 
-|Name|Type|Description|
-|---|---|---|
-|`onAddTag`|`Function`|When the added new tag|
-|`onRemoveTag`|`Function`|When the removed tag|
-|`removeTagKeys`|`Array`|Array of accepted keys|
-|`readOnly`|`Bool`|it specifies that an input field is read-only|
-|`isSuggestList`|`Bool`|if show suggestion list|
-|`suggestions`|`Array`|List of suggestion values|
+|Name|Type|Default Props|Description|
+|---|---|---|---|
+|`onAddTag`|`Function`|`undefined`|When the added new tag|
+|`onRemoveTag`|`Function`|`undefined`|When the removed tag|
+|`addTagKeys`|`Array`|`[13,9,40]`|Array of accepted adding keys|
+|`removeTagKeys`|`Array`|`[8, 27]`|Array of accepted removing keys|
+|`readOnly`|`Bool`|`false`|it specifies that an input field is read-only|
+|`isSuggestList`|`Bool`|`true`|if show suggestion list|
+|`suggestions`|`Array`|`[]`|List of suggestion values|
+|`placeholder`|`String`|`'Add new tag'`|field placeholder, for input component when input without value
 
 ## Example
 
