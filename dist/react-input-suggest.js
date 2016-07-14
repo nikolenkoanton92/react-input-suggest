@@ -84,7 +84,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    removeTagKeys: React.PropTypes.array, // array of number key(s) for remove tag
 	    readOnly: React.PropTypes.bool, // input with readOnly
 	    isSuggestList: React.PropTypes.bool, // disable suggest list or not
-	    suggestions: React.PropTypes.array // array of suggestions elements for suggestions list
+	    suggestions: React.PropTypes.array, // array of suggestions elements for suggestions list,
+	    placeholder: React.PropTypes.string
 	  },
 
 	  /**
@@ -93,12 +94,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  getDefaultProps: function getDefaultProps() {
 	    return {
-	      addTagKeys: [13, 9, 13, 40],
+	      addTagKeys: [13, 9, 40],
 	      removeTagKeys: [8, 27],
 	      readOnly: false,
 	      isSuggestList: true,
 	      tags: [],
-	      suggestions: []
+	      suggestions: [],
+	      placeholder: 'Add new tag'
 	    };
 	  },
 
@@ -377,7 +379,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var value = this.state.value;
 	    var width = '5px';
 
-	    if (placeholder !== '' || value === '') {
+	    if (placeholder !== '' && value === '') {
 	      width = placeholder.length * 8 + 'px';
 	    } else if (placeholder !== '' || value !== '') {
 	      width = 'auto';
