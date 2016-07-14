@@ -45,7 +45,7 @@ module.exports = React.createClass({
     var value = this.state.value
     var width = '5px'
 
-    if (placeholder !== '' || value === '') {
+    if (placeholder !== '' && value === '') {
       width = (placeholder.length * 8) + 'px'
     } else if (placeholder !== '' || value !== '') {
       width = 'auto'
