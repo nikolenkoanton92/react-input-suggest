@@ -15,6 +15,7 @@ React component for inputing tag. Build for my own projects, but if you have coo
 |`readOnly`|`Bool`|`false`|it specifies that an input field is read-only|
 |`isSuggestList`|`Bool`|`true`|if show suggestion list|
 |`suggestions`|`Array`|`[]`|List of suggestion values|
+|`suggestionValueName`|`String`|`name`|Name of property value for suggestions|
 |`placeholder`|`String`|`'Add new tag'`|field placeholder, for input component when input without value
 
 ## Example
