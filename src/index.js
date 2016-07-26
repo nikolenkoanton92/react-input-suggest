@@ -25,7 +25,8 @@ module.exports = React.createClass({
     readOnly: React.PropTypes.bool, // input with readOnly
     isSuggestList: React.PropTypes.bool, // disable suggest list or not
     suggestions: React.PropTypes.array, // array of suggestions elements for suggestions list,
-    placeholder:React.PropTypes.string
+    suggestionValueName: React.PropTypes.string, // name of suggestions property value
+    placeholder: React.PropTypes.string
   },
 
   /**
@@ -40,6 +41,7 @@ module.exports = React.createClass({
       isSuggestList: true,
       tags: [],
       suggestions: [],
+      suggestionValueName: 'name',
       placeholder: 'Add new tag'
     }
   },
@@ -180,6 +182,7 @@ module.exports = React.createClass({
         <SuggestList
         suggestValueFocus={this.state.suggestValueFocus}
         suggestions={suggestions}
+        valueName={this.props.suggestionValueName}
         onClick={this.handleClickOnSuggestion}
         onMouseMove={this.handleMouseMove}
         />
