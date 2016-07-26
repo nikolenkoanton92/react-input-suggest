@@ -85,6 +85,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    readOnly: React.PropTypes.bool, // input with readOnly
 	    isSuggestList: React.PropTypes.bool, // disable suggest list or not
 	    suggestions: React.PropTypes.array, // array of suggestions elements for suggestions list,
+	    suggestionValueName: React.PropTypes.string, // name of suggestions property value
 	    placeholder: React.PropTypes.string
 	  },
 
@@ -100,6 +101,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      isSuggestList: true,
 	      tags: [],
 	      suggestions: [],
+	      suggestionValueName: 'name',
 	      placeholder: 'Add new tag'
 	    };
 	  },
@@ -237,6 +239,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return React.createElement(SuggestList, {
 	        suggestValueFocus: this.state.suggestValueFocus,
 	        suggestions: suggestions,
+	        valueName: this.props.suggestionValueName,
 	        onClick: this.handleClickOnSuggestion,
 	        onMouseMove: this.handleMouseMove
 	      });
@@ -432,7 +435,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    name: React.PropTypes.string.isRequired,
 	    onClick: React.PropTypes.func,
 	    onMouseMove: React.PropTypes.func,
-	    isFocused: React.PropTypes.bool
+	    isFocused: React.PropTypes.bool,
+	    valueName: React.PropTypes.string
 	  },
 	  render: function render() {
 	    var className = this.props.isFocused ? 'suggest-list-value is-focused' : 'suggest-list-value';
@@ -477,13 +481,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  render: function render() {
 	    var self = this;
+
 	    var list = this.props.suggestions && this.props.suggestions.map(function (el, idx) {
 
 	      var isFocused = self.state.suggestValueFocus === idx ? true : false;
-
 	      return React.createElement(ListValue, {
 	        key: idx,
-	        name: el.name,
+	        name: el[self.props.valueName],
 	        onClick: self.props.onClick.bind(null, idx),
 	        onMouseMove: self.props.onMouseMove.bind(null, idx),
 	        isFocused: isFocused
