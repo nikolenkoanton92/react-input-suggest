@@ -10,8 +10,7 @@ var ListValue = React.createClass({
     name: React.PropTypes.string.isRequired,
     onClick: React.PropTypes.func,
     onMouseMove: React.PropTypes.func,
-    isFocused: React.PropTypes.bool,
-    valueName: React.PropTypes.string
+    isFocused: React.PropTypes.bool
   },
   render: function() {
     var className = this.props.isFocused ? 'suggest-list-value is-focused' : 'suggest-list-value'
@@ -32,7 +31,8 @@ module.exports = React.createClass({
 
   propTypes: {
     suggestions: React.PropTypes.array,
-    suggestValueFocus: React.PropTypes.number
+    suggestValueFocus: React.PropTypes.number,
+    valueName: React.PropTypes.string
   },
 
   getInitialState: function() {

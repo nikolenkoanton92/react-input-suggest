@@ -167,8 +167,7 @@ module.exports = React.createClass({
   },
 
   handleClickOnSuggestion: function(idx) {
-    var value = this.props.suggestions[idx].name
-
+    var value = this.props.suggestions[idx][this.props.suggestionValueName]
     if (value !== '') {
       this.addNewTag(value)
     }
@@ -217,9 +216,9 @@ module.exports = React.createClass({
   filterSuggestions: function(value) {
 
     var suggestions = this.state.suggestions
-
+    var self = this
     var filteredSuggestions = suggestions.filter(function(el) {
-      if (el.name.indexOf(value) > -1) {
+      if (el[self.props.suggestionValueName].indexOf(value) > -1) {
         return el
       }
     })
