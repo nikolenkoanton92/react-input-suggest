@@ -225,8 +225,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 
 	  handleClickOnSuggestion: function handleClickOnSuggestion(idx) {
-	    var value = this.props.suggestions[idx].name;
-
+	    var value = this.props.suggestions[idx][this.props.suggestionValueName];
 	    if (value !== '') {
 	      this.addNewTag(value);
 	    }
@@ -272,9 +271,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  filterSuggestions: function filterSuggestions(value) {
 
 	    var suggestions = this.state.suggestions;
-
+	    var self = this;
 	    var filteredSuggestions = suggestions.filter(function (el) {
-	      if (el.name.indexOf(value) > -1) {
+	      if (el[self.props.suggestionValueName].indexOf(value) > -1) {
 	        return el;
 	      }
 	    });
@@ -435,8 +434,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    name: React.PropTypes.string.isRequired,
 	    onClick: React.PropTypes.func,
 	    onMouseMove: React.PropTypes.func,
-	    isFocused: React.PropTypes.bool,
-	    valueName: React.PropTypes.string
+	    isFocused: React.PropTypes.bool
 	  },
 	  render: function render() {
 	    var className = this.props.isFocused ? 'suggest-list-value is-focused' : 'suggest-list-value';
@@ -461,7 +459,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  propTypes: {
 	    suggestions: React.PropTypes.array,
-	    suggestValueFocus: React.PropTypes.number
+	    suggestValueFocus: React.PropTypes.number,
+	    valueName: React.PropTypes.string
 	  },
 
 	  getInitialState: function getInitialState() {
