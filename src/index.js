@@ -60,6 +60,15 @@ module.exports = React.createClass({
     }
   },
 
+  componentWillReceiveProps: function(nextProps) {
+    if (nextProps.suggestions !== this.state.suggestions) {
+
+      this.setState({
+        suggestions: nextProps.suggestions.concat([])
+      });
+    }
+  },
+
   /**
    * add new tag
    * @param {String} tag
