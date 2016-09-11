@@ -60,7 +60,7 @@ module.exports = React.createClass({
           <ListValue
           key={idx}
           name={el[self.props.valueName]}
-          onClick={self.props.onClick.bind(null, idx)}
+          onClick={self.props.onClick.bind(null, el[self.props.valueName])}
           onMouseMove={self.props.onMouseMove.bind(null, idx)}
           isFocused={isFocused}
           />

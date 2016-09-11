@@ -35,7 +35,7 @@ module.exports = React.createClass({
 
   getDefaultProps: function() {
     return {
-      addTagKeys: [13, 9, 40],
+      addTagKeys: [13, 9, 32],
       removeTagKeys: [8, 27],
       readOnly: false,
       isSuggestList: true,
@@ -175,8 +175,7 @@ module.exports = React.createClass({
     })
   },
 
-  handleClickOnSuggestion: function(idx) {
-    var value = this.props.suggestions[idx][this.props.suggestionValueName]
+  handleClickOnSuggestion: function(value) {
     if (value !== '') {
       this.addNewTag(value)
     }
