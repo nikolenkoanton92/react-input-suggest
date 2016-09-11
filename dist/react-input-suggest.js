@@ -95,7 +95,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	  getDefaultProps: function getDefaultProps() {
 	    return {
-	      addTagKeys: [13, 9, 40],
+	      addTagKeys: [13, 9, 32],
 	      removeTagKeys: [8, 27],
 	      readOnly: false,
 	      isSuggestList: true,
@@ -233,8 +233,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });
 	  },
 
-	  handleClickOnSuggestion: function handleClickOnSuggestion(idx) {
-	    var value = this.props.suggestions[idx][this.props.suggestionValueName];
+	  handleClickOnSuggestion: function handleClickOnSuggestion(value) {
 	    if (value !== '') {
 	      this.addNewTag(value);
 	    }
@@ -496,7 +495,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return React.createElement(ListValue, {
 	        key: idx,
 	        name: el[self.props.valueName],
-	        onClick: self.props.onClick.bind(null, idx),
+	        onClick: self.props.onClick.bind(null, el[self.props.valueName]),
 	        onMouseMove: self.props.onMouseMove.bind(null, idx),
 	        isFocused: isFocused
 	      });
