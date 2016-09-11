@@ -1,6 +1,6 @@
 {
   "name": "react-input-suggest",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Input Suggest Component for React",
   "main": "lib/index.js",
   "scripts": {
