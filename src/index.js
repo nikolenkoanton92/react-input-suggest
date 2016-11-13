@@ -226,7 +226,7 @@ module.exports = React.createClass({
     var suggestions = this.state.suggestions
     var self = this
     var filteredSuggestions = suggestions.filter(function(el) {
-      if (el[self.props.suggestionValueName].indexOf(value) > -1) {
+      if (el[self.props.suggestionValueName].toLowerCase().indexOf(value.toLowerCase()) > -1) {
         return el
       }
     })
