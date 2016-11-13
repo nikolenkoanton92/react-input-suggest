@@ -20,6 +20,8 @@ module.exports = React.createClass({
   propTypes: {
     onAddTag: React.PropTypes.func, // function(tags){}
     onRemoveTag: React.PropTypes.func, // function(idx){}
+    keyArrowDown: React.PropTypes.number, // key arrow up
+    keyArrowUp: React.PropTypes.number, // key arrow down
     addTagKeys: React.PropTypes.array, // array of number key(s) for add a new tag
     removeTagKeys: React.PropTypes.array, // array of number key(s) for remove tag
     readOnly: React.PropTypes.bool, // input with readOnly
@@ -37,6 +39,8 @@ module.exports = React.createClass({
     return {
       addTagKeys: [13, 9, 32],
       removeTagKeys: [8, 27],
+      keyArrowDown: 40,
+      keyArrowUp: 38,
       readOnly: false,
       isSuggestList: true,
       tags: [],
@@ -65,7 +69,7 @@ module.exports = React.createClass({
 
       this.setState({
         suggestions: nextProps.suggestions.concat([])
-      });
+      })
     }
   },
 
@@ -143,6 +147,13 @@ module.exports = React.createClass({
     var value = this.state.inputValue
     var add = addTag.indexOf(event.keyCode) !== -1
     var remove = removeTag.indexOf(event.keyCode) !== -1
+    if (event.keyCode === this.props.keyArrowDown) {
+      this.handleArrowDown()
+    }
+
+    if (event.keyCode === this.props.keyArrowUp) {
+      this.handleArrowUp()
+    }
 
     if (add && value !== '') {
       event.preventDefault()
@@ -173,6 +184,26 @@ module.exports = React.createClass({
     this.setState({
       suggestValueFocus: idx
     })
+  },
+
+  handleArrowDown: function() {
+    var total = this.state.suggestions.length - 1
+    var idx = this.state.suggestValueFocus
+
+    if (idx < total) {
+      this.setState({
+        suggestValueFocus: idx + 1
+      })
+    }
+  },
+
+  handleArrowUp: function() {
+    var idx = this.state.suggestValueFocus
+    if (idx !== 0) {
+      this.setState({
+        suggestValueFocus: idx - 1
+      })
+    }
   },
 
   handleClickOnSuggestion: function(value) {
