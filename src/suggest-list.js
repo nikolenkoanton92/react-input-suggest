@@ -2,26 +2,31 @@
  * Module dependencies
  */
 
-var React = require('react')
+const React = require('react');
 
-var ListValue = React.createClass({
+const ListValue = React.createClass({
 
   propTypes: {
     name: React.PropTypes.string.isRequired,
     onClick: React.PropTypes.func,
     onMouseMove: React.PropTypes.func,
-    isFocused: React.PropTypes.bool
+    isFocused: React.PropTypes.bool,
+    onKeyDown: React.PropTypes.func,
   },
-  render: function() {
-    var className = this.props.isFocused ? 'suggest-list-value is-focused' : 'suggest-list-value'
+  render() {
+    const className = this.props.isFocused
+      ? 'suggest-list-value is-focused' : 'suggest-list-value';
+
     return (
-      <div className={className}
-      onClick={this.props.onClick}
-      onMouseMove={this.props.onMouseMove}
-      onKeyDown={this.props.onKeyDown}>{this.props.name}</div>
-      )
-  }
-})
+      <div
+        className={className}
+        onClick={this.props.onClick}
+        onMouseMove={this.props.onMouseMove}
+        onKeyDown={this.props.onKeyDown}
+      >{this.props.name}</div>
+    );
+  },
+});
 
 module.exports = React.createClass({
 
@@ -30,42 +35,41 @@ module.exports = React.createClass({
    */
 
   propTypes: {
-    suggestions: React.PropTypes.array,
+    suggestions: React.PropTypes.arrayOf(React.PropTypes.object),
     suggestValueFocus: React.PropTypes.number,
-    valueName: React.PropTypes.string
   },
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       isFocused: this.props.isFocused,
-      suggestValueFocus: this.props.suggestValueFocus
-    }
+      suggestValueFocus: this.props.suggestValueFocus,
+    };
   },
 
-  componentWillReceiveProps: function(nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.suggestValueFocus !== this.state.suggestValueFocus) {
       this.setState({
-        suggestValueFocus: nextProps.suggestValueFocus
-      })
+        suggestValueFocus: nextProps.suggestValueFocus,
+      });
     }
   },
 
-  render: function() {
-    var self = this
+  render() {
+    const self = this;
 
-    var list = this.props.suggestions && this.props.suggestions.map(function(el, idx) {
+    const list = this.props.suggestions && this.props.suggestions.map((el, idx) => {
+      const isFocused = (self.state.suggestValueFocus === idx);
 
-        var isFocused = (self.state.suggestValueFocus === idx) ? true : false
-        return (
-          <ListValue
+      return (
+        <ListValue
           key={idx}
           name={el[self.props.valueName]}
           onClick={self.props.onClick.bind(null, el[self.props.valueName])}
           onMouseMove={self.props.onMouseMove.bind(null, idx)}
           isFocused={isFocused}
-          />
-          )
-    })
+        />
+      );
+    });
 
     return (
       <div className="suggest-list-wrapper">
@@ -73,6 +77,6 @@ module.exports = React.createClass({
           {list}
         </div>
       </div>
-      )
-  }
-})
+    );
+  },
+});

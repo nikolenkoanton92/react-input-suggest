@@ -2,7 +2,7 @@
  * Module dependencies
  */
 
-var React = require('react')
+const React = require('react');
 
 module.exports = React.createClass({
 
@@ -13,71 +13,70 @@ module.exports = React.createClass({
   propTypes: {
     onChange: React.PropTypes.func,
     onKeyDown: React.PropTypes.func,
-    placeholder: React.PropTypes.string
+    placeholder: React.PropTypes.string,
+    readOnly: React.PropTypes.bool,
   },
-  getDefaultProps: function() {
-    placeholder: ''
+  getDefaultProps() {
+    placeholder: '';
   },
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       value: '',
-      width: '5px'
-    }
+      width: '5px',
+    };
   },
-  componentDidMount: function() {
-    this.changeInputWidth()
+  componentDidMount() {
+    this.changeInputWidth();
   },
-  componentWillReceiveProps: function(nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.value !== this.state.value) {
-      var value = nextProps.value.trim()
+      const value = nextProps.value.trim();
 
       this.setState({
-        value: value
-      })
-      this.changeInputWidth()
-
+        value,
+      });
+      this.changeInputWidth();
     }
   },
 
-  changeInputWidth: function() {
-    var placeholder = this.props.placeholder
-    var value = this.state.value
-    var width = '5px'
+  changeInputWidth() {
+    const placeholder = this.props.placeholder;
+    const value = this.state.value;
+    let width = '5px';
 
     if (placeholder !== '' && value === '') {
-      width = (placeholder.length * 8) + 'px'
+      width = `${placeholder.length * 8}px`;
     } else if (placeholder !== '' || value !== '') {
-      width = 'auto'
+      width = 'auto';
     }
 
     if (width !== this.state.width) {
       this.setState({
-        width: width
-      })
+        width,
+      });
     }
-
-
   },
 
-  focus: function() {
-    this.refs.input.focus()
+  focus() {
+    this.refs.input.focus();
   },
 
-  render: function() {
-    var style = {
-      width: this.state.width
-    }
+  render() {
+    const style = {
+      width: this.state.width,
+    };
     return (
-      <input  ref="input" className="input-suggest-input"
-      style={style}
-      placeholder={this.props.placeholder}
-      value={this.state.value}
-      onChange={this.props.onChange}
-      onKeyDown={this.props.onKeyDown}
-      readOnly={this.props.readOnly}
-      size={this.state.size}
+      <input
+        ref="input" className="input-suggest-input"
+        style={style}
+        placeholder={this.props.placeholder}
+        value={this.state.value}
+        onChange={this.props.onChange}
+        onKeyDown={this.props.onKeyDown}
+        readOnly={this.props.readOnly}
+        size={this.state.size}
       />
-      )
-  }
-})
+    );
+  },
+});

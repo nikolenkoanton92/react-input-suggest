@@ -2,10 +2,10 @@
  * Module dependencies
  */
 
-var React = require('react')
-var Tag = require('./tag')
-var Input = require('./input')
-var SuggestList = require('./suggest-list')
+const React = require('react');
+const Tag = require('./tag');
+const Input = require('./input');
+const SuggestList = require('./suggest-list');
 
 /**
  * expose React Input Suggest component
@@ -22,20 +22,24 @@ module.exports = React.createClass({
     onRemoveTag: React.PropTypes.func, // function(idx){}
     keyArrowDown: React.PropTypes.number, // key arrow up
     keyArrowUp: React.PropTypes.number, // key arrow down
-    addTagKeys: React.PropTypes.array, // array of number key(s) for add a new tag
-    removeTagKeys: React.PropTypes.array, // array of number key(s) for remove tag
+    // addTagKeys: React.PropTypes.array, // array of number key(s) for add a new tag
+    addTagKeys: React.PropTypes.arrayOf(React.PropTypes.number),
+    // removeTagKeys: React.PropTypes.array, // array of number key(s) for remove tag
+    removeTagKeys: React.PropTypes.arrayOf(React.PropTypes.number),
     readOnly: React.PropTypes.bool, // input with readOnly
     isSuggestList: React.PropTypes.bool, // disable suggest list or not
-    suggestions: React.PropTypes.array, // array of suggestions elements for suggestions list,
+    suggestions: React.PropTypes.arrayOf(React.PropTypes.object),
+    // suggestions: React.PropTypes.array, // array of suggestions elements for suggestions list,
     suggestionValueName: React.PropTypes.string, // name of suggestions property value
-    placeholder: React.PropTypes.string
+    placeholder: React.PropTypes.string,
+    tags: React.PropTypes.arrayOf(React.PropTypes.string),
   },
 
   /**
    * Set Default Props Value
    */
 
-  getDefaultProps: function() {
+  getDefaultProps() {
     return {
       addTagKeys: [13, 9, 32],
       removeTagKeys: [8, 27],
@@ -46,30 +50,29 @@ module.exports = React.createClass({
       tags: [],
       suggestions: [],
       suggestionValueName: 'name',
-      placeholder: 'Add new tag'
-    }
+      placeholder: 'Add new tag',
+    };
   },
 
   /**
    * Set Default State Value
    */
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       inputValue: '',
       tags: [],
       isOpen: false,
       suggestions: this.props.suggestions,
-      suggestValueFocus: 0
-    }
+      suggestValueFocus: 0,
+    };
   },
 
-  componentWillReceiveProps: function(nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.suggestions !== this.state.suggestions) {
-
       this.setState({
-        suggestions: nextProps.suggestions.concat([])
-      })
+        suggestions: nextProps.suggestions.concat([]),
+      });
     }
   },
 
@@ -78,21 +81,21 @@ module.exports = React.createClass({
    * @param {String} tag
    */
 
-  addNewTag: function(tag) {
-    this.clearInputValue()
-    this.closeSuggestionList()
-    this.resetSuggestions()
-    this.props.onAddTag(tag)
+  addNewTag(tag) {
+    this.clearInputValue();
+    this.closeSuggestionList();
+    this.resetSuggestions();
+    this.props.onAddTag(tag);
   },
 
   /**
    * clear input value
    */
 
-  clearInputValue: function() {
+  clearInputValue() {
     this.setState({
-      inputValue: ''
-    })
+      inputValue: '',
+    });
   },
 
   /**
@@ -100,207 +103,207 @@ module.exports = React.createClass({
    * @param {Number} idx // index of element in array
    */
 
-  removeTag: function(idx) {
-    this.props.onRemoveTag(idx)
+  removeTag(idx) {
+    this.props.onRemoveTag(idx);
   },
 
-  focus: function() {
-    this.refs.input.focus()
+  focus() {
+    this.refs.input.focus();
   },
 
 
   // @TODO (@nikolenkoanton92) need fix blur
-  blur: function() {
-    this.refs.input.blur()
-    this.refs.wrapper.blur()
+  blur() {
+    this.refs.input.blur();
+    this.refs.wrapper.blur();
   },
 
-  handleClickOnWrapper: function(event) {
-    var tag = event.target.tagName.toLowerCase()
+  handleClickOnWrapper(event) {
+    const tag = event.target.tagName.toLowerCase();
 
     if (tag === 'span') {
-      return false
+      return false;
     }
 
-    this.focus()
+    this.focus();
     // this.blur()
 
-    if (this.props.isSuggestList)
-      this.openSuggestionList()
+    if (this.props.isSuggestList) {
+      this.openSuggestionList();
+    }
   },
 
-  openSuggestionList: function() {
+  openSuggestionList() {
     this.setState({
-      isOpen: true
-    })
+      isOpen: true,
+    });
   },
 
-  closeSuggestionList: function() {
+  closeSuggestionList() {
     this.setState({
-      isOpen: false
-    })
+      isOpen: false,
+    });
   },
 
-  handleKeyDown: function(event) {
-    var addTag = this.props.addTagKeys
-    var removeTag = this.props.removeTagKeys
-    var value = this.state.inputValue
-    var add = addTag.indexOf(event.keyCode) !== -1
-    var remove = removeTag.indexOf(event.keyCode) !== -1
+  handleKeyDown(event) {
+    const addTag = this.props.addTagKeys;
+    const removeTag = this.props.removeTagKeys;
+    const value = this.state.inputValue;
+    const add = addTag.indexOf(event.keyCode) !== -1;
+    const remove = removeTag.indexOf(event.keyCode) !== -1;
     if (event.keyCode === this.props.keyArrowDown) {
-      this.handleArrowDown()
+      this.handleArrowDown();
     }
 
     if (event.keyCode === this.props.keyArrowUp) {
-      this.handleArrowUp()
+      this.handleArrowUp();
     }
 
     if (add && value !== '') {
-      event.preventDefault()
-      this.addNewTag(value)
+      event.preventDefault();
+      this.addNewTag(value);
     }
 
     if (remove && value === '') {
-      event.preventDefault()
-      this.removeTag(this.state.tags.length - 1)
+      event.preventDefault();
+      this.removeTag(this.state.tags.length - 1);
     }
 
     if (event.keyCode === 8 && value !== '') {
-      this.resetSuggestions()
+      this.resetSuggestions();
     }
   },
 
-  handleInputChange: function(event) {
-    var value = event.target.value.trim()
+  handleInputChange(event) {
+    const value = event.target.value.trim();
     this.setState({
-      inputValue: value
-    })
+      inputValue: value,
+    });
 
-    this.openSuggestionList()
-    this.filterSuggestions(value)
+    this.openSuggestionList();
+    this.filterSuggestions(value);
   },
 
-  handleMouseMove: function(idx) {
+  handleMouseMove(idx) {
     this.setState({
-      suggestValueFocus: idx
-    })
+      suggestValueFocus: idx,
+    });
   },
 
-  handleArrowDown: function() {
-    var total = this.state.suggestions.length - 1
-    var idx = this.state.suggestValueFocus
+  handleArrowDown() {
+    const total = this.state.suggestions.length - 1;
+    const idx = this.state.suggestValueFocus;
 
     if (idx < total) {
       this.setState({
-        suggestValueFocus: idx + 1
-      })
+        suggestValueFocus: idx + 1,
+      });
     }
   },
 
-  handleArrowUp: function() {
-    var idx = this.state.suggestValueFocus
+  handleArrowUp() {
+    const idx = this.state.suggestValueFocus;
     if (idx !== 0) {
       this.setState({
-        suggestValueFocus: idx - 1
-      })
+        suggestValueFocus: idx - 1,
+      });
     }
   },
 
-  handleClickOnSuggestion: function(value) {
+  handleClickOnSuggestion(value) {
     if (value !== '') {
-      this.addNewTag(value)
+      this.addNewTag(value);
     }
   },
 
-  renderSuggestList: function() {
-
-    var suggestions = this.state.suggestions
-    if (this.state.isOpen && suggestions.length > 0 && this.props.isSuggestList) {
-      return (
-        <SuggestList
-        suggestValueFocus={this.state.suggestValueFocus}
-        suggestions={suggestions}
-        valueName={this.props.suggestionValueName}
-        onClick={this.handleClickOnSuggestion}
-        onMouseMove={this.handleMouseMove}
-        />
-        )
-    } else {
-      return null
-    }
-  },
-
-  renderDropdown: function() {
-    var dropdownBoxArrowClass = this.state.isOpen ?
-      'input-dropdown-box-arrow-up' : 'input-dropdown-box-arrow-down'
+  renderDropdown() {
+    const dropdownBoxArrowClass = this.state.isOpen ?
+      'input-dropdown-box-arrow-up' : 'input-dropdown-box-arrow-down';
 
     return (
       <span className="input-dropdown-box" onMouseDown={this.handleMouseDownArrow}>
-      <span className={dropdownBoxArrowClass} onMouseDown={this.handleMouseDownArrow}></span>
+        <span className={dropdownBoxArrowClass} onMouseDown={this.handleMouseDownArrow} />
       </span>
-      )
+    );
   },
 
-  handleMouseDownArrow: function(event) {
-    var tag = event.target.tagName.toLowerCase()
+  handleMouseDownArrow(event) {
+    const tag = event.target.tagName.toLowerCase();
     if (tag !== 'span') {
-      return false
+      return false;
     }
 
     this.setState({
-      isOpen: !this.state.isOpen
-    })
+      isOpen: !this.state.isOpen,
+    });
   },
 
-  filterSuggestions: function(value) {
-
-    var suggestions = this.state.suggestions
-    var self = this
-    var filteredSuggestions = suggestions.filter(function(el) {
-      if (el[self.props.suggestionValueName].toLowerCase().indexOf(value.toLowerCase()) > -1) {
-        return el
-      }
-    })
+  filterSuggestions(value) {
+    const suggestions = this.state.suggestions;
+    const self = this;
+    const filteredSuggestions = suggestions
+      .filter(el => el[self.props.suggestionValueName]
+        .toLowerCase().indexOf(value.toLowerCase()) > -1);
 
     this.setState({
-      suggestions: filteredSuggestions
-    })
+      suggestions: filteredSuggestions,
+    });
   },
 
-  resetSuggestions: function() {
-    var suggestions = this.props.suggestions
+  resetSuggestions() {
+    const suggestions = this.props.suggestions;
 
     this.setState({
-      suggestions: suggestions
-    })
+      suggestions,
+    });
   },
 
-  render: function() {
-    var self = this
-    var tags = this.props.tags && this.props.tags.map(function(tag, idx) {
-        return (
-          <Tag key={idx} label={tag} index={idx} onRemove={self.removeTag}/>
-          )
-    })
+  renderSuggestList() {
+    const suggestions = this.state.suggestions;
+    if (this.state.isOpen && suggestions.length > 0 && this.props.isSuggestList) {
+      return (
+        <SuggestList
+          suggestValueFocus={this.state.suggestValueFocus}
+          suggestions={suggestions}
+          valueName={this.props.suggestionValueName}
+          onClick={this.handleClickOnSuggestion}
+          onMouseMove={this.handleMouseMove}
+        />
+      );
+    }
 
-    var suggestListWrapper = this.renderSuggestList()
-    var dropdownSpan = this.props.isSuggestList ? this.renderDropdown() : null
+    return null;
+  },
+
+  render() {
+    const self = this;
+    const tags = this.props.tags && this.props.tags.map((tag, idx) => (
+      <Tag key={idx} label={tag} index={idx} onRemove={self.removeTag} />
+        ));
+
+    const suggestListWrapper = this.renderSuggestList();
+    const dropdownSpan = this.props.isSuggestList ? this.renderDropdown() : null;
 
     return (
       <div className="suggest-wrapper">
-      <div ref="wrapper" className="input-suggest-wrapper" onClick={this.handleClickOnWrapper}>
-      {tags}
-      <Input ref="input"
-      value={this.state.inputValue}
-      onKeyDown={this.handleKeyDown}
-      onChange={this.handleInputChange}
-      readOnly={this.props.readOnly}
-      placeholder={this.props.placeholder}
-      />
-      {dropdownSpan}
+        <div
+          ref="wrapper"
+          className="input-suggest-wrapper"
+          onClick={this.handleClickOnWrapper}
+        >
+          {tags}
+          <Input
+            ref="input"
+            value={this.state.inputValue}
+            onKeyDown={this.handleKeyDown}
+            onChange={this.handleInputChange}
+            readOnly={this.props.readOnly}
+            placeholder={this.props.placeholder}
+          />
+          {dropdownSpan}
+        </div>
+        {suggestListWrapper}
       </div>
-      {suggestListWrapper}
-      </div>
-      )
-  }
-})
+    );
+  },
+});
