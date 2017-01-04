@@ -1,34 +1,27 @@
 /**
  * Module dependencies
  */
+import React, { Component } from 'react';
 
-const React = require('react');
+// const React = require('react');
 
-module.exports = React.createClass({
+class Input extends Component {
+  constructor(props) {
+    super(props);
 
-  /**
-   * Setup Property Types
-   */
-
-  propTypes: {
-    onChange: React.PropTypes.func,
-    onKeyDown: React.PropTypes.func,
-    placeholder: React.PropTypes.string,
-    readOnly: React.PropTypes.bool,
-  },
-  getDefaultProps() {
-    placeholder: '';
-  },
-
-  getInitialState() {
-    return {
+    this.state = {
       value: '',
       width: '5px',
     };
-  },
+
+    this.changeInputWidth = this.changeInputWidth.bind(this);
+    this.focus = this.focus.bind(this);
+  }
+
   componentDidMount() {
     this.changeInputWidth();
-  },
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.value !== this.state.value) {
       const value = nextProps.value.trim();
@@ -38,7 +31,7 @@ module.exports = React.createClass({
       });
       this.changeInputWidth();
     }
-  },
+  }
 
   changeInputWidth() {
     const placeholder = this.props.placeholder;
@@ -56,11 +49,11 @@ module.exports = React.createClass({
         width,
       });
     }
-  },
+  }
 
   focus() {
     this.refs.input.focus();
-  },
+  }
 
   render() {
     const style = {
@@ -78,5 +71,24 @@ module.exports = React.createClass({
         size={this.state.size}
       />
     );
-  },
-});
+  }
+}
+
+/**
+ * Setup Property Types
+ */
+Input.propTypes = {
+  onChange: React.PropTypes.func,
+  onKeyDown: React.PropTypes.func,
+  placeholder: React.PropTypes.string,
+  readOnly: React.PropTypes.bool,
+};
+
+/**
+ * Set Default Props Value
+ */
+Input.defaultProps = {
+  placeholder: '',
+};
+
+export default Input;

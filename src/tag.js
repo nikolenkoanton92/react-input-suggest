@@ -2,25 +2,20 @@
  * Module dependencies
  */
 
-const React = require('react');
+import React, { Component } from 'react';
 
-module.exports = React.createClass({
+class Tag extends Component {
 
-  /**
-   * Setup Property Types
-   */
+  constructor(props) {
+    super(props);
 
-  propTypes: {
-    index: React.PropTypes.number,
-    label: React.PropTypes.string.isRequired,
-    onClick: React.PropTypes.func,
-    onRemove: React.PropTypes.func,
-  },
+    this.onRemove = this.onRemove.bind(this);
+  }
 
   onRemove(event) {
     event.preventDefault();
     this.props.onRemove(this.props.index);
-  },
+  }
 
   render() {
     return (
@@ -31,5 +26,17 @@ module.exports = React.createClass({
         </span>
       </div>
     );
-  },
-});
+  }
+}
+
+/**
+ * Setup Property Types
+ */
+Tag.propTypes = {
+  index: React.PropTypes.number,
+  label: React.PropTypes.string.isRequired,
+  onClick: React.PropTypes.func,
+  onRemove: React.PropTypes.func,
+};
+
+export default Tag;

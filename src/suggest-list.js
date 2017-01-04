@@ -2,49 +2,40 @@
  * Module dependencies
  */
 
-const React = require('react');
+import React, { Component } from 'react';
 
-const ListValue = React.createClass({
-
-  propTypes: {
-    name: React.PropTypes.string.isRequired,
-    onClick: React.PropTypes.func,
-    onMouseMove: React.PropTypes.func,
-    isFocused: React.PropTypes.bool,
-    onKeyDown: React.PropTypes.func,
-  },
-  render() {
-    const className = this.props.isFocused
+const ListValue = function ListValue(props) {
+  const className = props.isFocused
       ? 'suggest-list-value is-focused' : 'suggest-list-value';
+  return (
+    <div
+      className={className}
+      onClick={props.onClick}
+      onMouseMove={props.onMouseMove}
+      onKeyDown={props.onKeyDown}
+    >{props.name}</div>
+  );
+};
 
-    return (
-      <div
-        className={className}
-        onClick={this.props.onClick}
-        onMouseMove={this.props.onMouseMove}
-        onKeyDown={this.props.onKeyDown}
-      >{this.props.name}</div>
-    );
-  },
-});
 
-module.exports = React.createClass({
+ListValue.propTypes = {
+  name: React.PropTypes.string.isRequired,
+  onClick: React.PropTypes.func,
+  onMouseMove: React.PropTypes.func,
+  isFocused: React.PropTypes.bool,
+  onKeyDown: React.PropTypes.func,
+};
 
-  /**
-   * Setup Property Types
-   */
 
-  propTypes: {
-    suggestions: React.PropTypes.arrayOf(React.PropTypes.object),
-    suggestValueFocus: React.PropTypes.number,
-  },
+class SuggestList extends Component {
+  constructor(props) {
+    super(props);
 
-  getInitialState() {
-    return {
+    this.state = {
       isFocused: this.props.isFocused,
       suggestValueFocus: this.props.suggestValueFocus,
     };
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.suggestValueFocus !== this.state.suggestValueFocus) {
@@ -52,7 +43,7 @@ module.exports = React.createClass({
         suggestValueFocus: nextProps.suggestValueFocus,
       });
     }
-  },
+  }
 
   render() {
     const self = this;
@@ -78,5 +69,16 @@ module.exports = React.createClass({
         </div>
       </div>
     );
-  },
-});
+  }
+}
+
+/**
+ * Setup Property Types
+ */
+SuggestList.propTypes = {
+  suggestions: React.PropTypes.arrayOf(React.PropTypes.object),
+  suggestValueFocus: React.PropTypes.number,
+  isFocused: React.PropTypes.bool,
+};
+
+export default SuggestList;
