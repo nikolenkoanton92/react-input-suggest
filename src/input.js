@@ -52,7 +52,7 @@ class Input extends Component {
   }
 
   focus() {
-    this.refs.input.focus();
+    this.input.focus();
   }
 
   render() {
@@ -61,7 +61,8 @@ class Input extends Component {
     };
     return (
       <input
-        ref="input" className="input-suggest-input"
+        ref={(input) => { this.input = input; }}
+        className="input-suggest-input"
         style={style}
         placeholder={this.props.placeholder}
         value={this.state.value}

@@ -84,14 +84,14 @@ class ReactInputSuggest extends Component {
   }
 
   focus() {
-    this.refs.input.focus();
+    this.input.focus();
   }
 
 
   // @TODO (@nikolenkoanton92) need fix blur
   blur() {
-    this.refs.input.blur();
-    this.refs.wrapper.blur();
+    this.input.blur();
+    this.wrapper.blur();
   }
 
   handleClickOnWrapper(event) {
@@ -107,6 +107,8 @@ class ReactInputSuggest extends Component {
     if (this.props.isSuggestList) {
       this.openSuggestionList();
     }
+
+    return undefined;
   }
 
   openSuggestionList() {
@@ -198,7 +200,7 @@ class ReactInputSuggest extends Component {
       return false;
     }
 
-    this.setState({
+    return this.setState({
       isOpen: !this.state.isOpen,
     });
   }
@@ -263,13 +265,13 @@ class ReactInputSuggest extends Component {
     return (
       <div className="suggest-wrapper">
         <div
-          ref="wrapper"
+          ref={(wrapper) => { this.wrapper = wrapper; }}
           className="input-suggest-wrapper"
           onClick={this.handleClickOnWrapper}
         >
           {tags}
           <Input
-            ref="input"
+            ref={(input) => { this.input = input; }}
             value={this.state.inputValue}
             onKeyDown={this.handleKeyDown}
             onChange={this.handleInputChange}
