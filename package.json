@@ -20,7 +20,7 @@
     "suggest"
   ],
   "peerDependencies": {
-    "react": "^0.14.7"
+    "react": "^15.0"
   },
   "author": "Anton Nikoleno <nikolenkoanton92@gmail.com> (http://antonnikolenko.com/)",
   "license": "MIT",
@@ -43,8 +43,8 @@
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.8.0",
     "express": "^4.13.4",
-    "react": "^0.14.8",
-    "react-dom": "^0.14.8",
+    "react": "^15.0",
+    "react-dom": "^15.0",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.0",
     "webpack-dev-middleware": "^1.6.1"
