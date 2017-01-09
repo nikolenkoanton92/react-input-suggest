@@ -316,7 +316,7 @@ ReactInputSuggest.defaultProps = {
   keyArrowDown: 40,
   keyArrowUp: 38,
   readOnly: false,
-  isSuggestList: true,
+  isSuggestList: false,
   tags: [],
   suggestions: [],
   suggestionValueName: 'name',
