@@ -35,7 +35,6 @@ class Tag extends Component {
 Tag.propTypes = {
   index: React.PropTypes.number,
   label: React.PropTypes.string.isRequired,
-  onClick: React.PropTypes.func,
   onRemove: React.PropTypes.func,
 };
 

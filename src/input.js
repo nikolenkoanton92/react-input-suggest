@@ -3,8 +3,6 @@
  */
 import React, { Component } from 'react';
 
-// const React = require('react');
-
 class Input extends Component {
   constructor(props) {
     super(props);
